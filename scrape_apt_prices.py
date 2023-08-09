@@ -139,7 +139,7 @@ def main():
     floorplans = body.json()['data']['apartmentComplex']['floorplans']
 
     # Create the engine for SQLAlchemy
-    engine = create_engine('sqlite:///prices.db', echo=True)
+    engine = create_engine('sqlite:///prices.db', echo=False)
     Apartment.metadata.create_all(engine)
 
     Session = sessionmaker(bind=engine)
@@ -154,6 +154,7 @@ def main():
         rate = floorplan["startingRate"]
         # construct new apartment object with info
         apt = Apartment(current_date=req_date, identifier_name=name, price=rate)
+        print(str(apt))
         session.add(apt)
 
     # commit all the stuff and close
